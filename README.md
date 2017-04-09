@@ -4,9 +4,16 @@
 # mrcp
 MicroPede Robot Control Protocol. 
 
+```gcode
+M01 V50 X15 Y42 Z1.6 A-3.1 B0 C3.1
+```
+
 Work in progress 😃
 
 **Design Goals**
+The protocol was designed to be a very simple to use method to control hobby robotic arms. 
+Since all commands are in plain text, they can easily be manually written and send over serial via `screen` to the robot, to control it in a adhoc fashion. 🤖
+
 - simple to use 😎
 - text based 📖
 - g-code like 💻
@@ -44,38 +51,51 @@ S M  X3.1 Y42 Z1.6  \n
 |        W|write    |write mro to EEPROM.|
 
 # mril
-MicroPede Robot Instruction Language
+MicroPede Robot Instruction Language.
+A MRIL instruction is a string, comprising one or more commands.
+
+`<mril>` example: `M01 X10 Y-5 Z3 I0 1`
+
+A command is the combination of a symbol, a single digit option (optional) and multiple digit value (including sign).
+
+`<command>[<option>][<value>]` example: `R5 -30.1`
+
+Commands
 
 ## Commands
 
 
 **Movement**
 
-|char| command | syntax    | example   | description |   returns   |   example  |
-|   ---   |   ---   |    ---    |   ----    |     ---     |     ---     |     ---    |
-|        M| movement method| | | | |
-|        V| velocity| V<0-999>| | | |
-|        X| x coordinate| X<±0-990> | | | |
-|        Y| | Y<±0-990>| Y -12.3| | |
-|        Z| | Z<±0-990>| | | |
-|        A| euler angle a| | | | |
-|        B| euler angle b| | | | |
-|        C| euler angle c| | | | |
-|        R| axis rotation| | | | |
-|        T| | | | | |
-
+| char | command           | syntax                         | example         | description                                            |
+|------|-------------------|--------------------------------|-----------------|--------------------------------------------------------|
+| M    | movement method   | M{method:00/01/02}             | M00             | 00 - P2P; 01 - Linear; 02 - Circular                   |
+| V    | velocity          | V{velocity:0-999}              | V100            | Sets linear or angular velocity based on M command!    |
+| X    | x coordinate      | X{coordinate:±0-999}           | X 0             |                                                        |
+| Y    | y coordinate      | Y{coordinate:±0-999}           | Y -12.3         |                                                        |
+| Z    | z coordinate      | Z{coordinate:±0-999}           | Z 0.5           |                                                        |
+| A    | euler angle a     | A{angle(deg):±0-360}           | A270            | Euler in Z->Y->X rotation order, moving axis.          |
+| B    | euler angle b     | B{angle(deg):±0-360}           | B180            |                                                        |
+| C    | euler angle c     | C{angle(deg):±0-360}           | C55             |                                                        |
+| R    | axis rotation     | R{joint:0-9}{rot(deg):{±0-360} | R2 90 R7 0      | set target rotation. Additional axis (6-9) may be used |
+| T    | anchor circ. move | T{axis:0-2}{coordinate:±0-999} | T0 2 T1 5 T2 -5 | set anchor point for circular movement interpolation   |
 
 **IO**
 
-|char| command | syntax    | example   | description |   returns   |   example  |
-|   ---   |   ---   |    ---    |   ----    |     ---     |     ---     |     ---    |
-|       I | wait for input| I<0-9 [pin number]><0/1 [state]> | I9 0 | wait for pin 9 to be LOW/0 |
-|       O | set output| O<0-9 [pin number]><0/1 [state]> | O3 1 | set pin 3 to HIGH |
-
+| char | command        | syntax                       | example | description                | returns | example |
+|------|----------------|------------------------------|---------|----------------------------|---------|---------|
+| I    | wait for input | I{pin number:0-9}{state:0/1} | I9 0    | wait for pin 9 to be LOW/0 |         |         |
+| O    | set output     | O{pin number:0-9}{state:0/1} | O3 1    | set pin 3 to HIGH          |         |         |
 
 **Monitoring**
 
-|char| command | syntax    | example   | description |   returns   |   example  |
-|   ---   |   ---   |    ---    |   ----    |     ---     |     ---     |     ---    |
-|       N | instruction number| N<0-9999> | N142 | command number 142 | N<0/1 [0-executing/1-executed]><0-9999 [number] | N1 142
-|       X | get X coordinate| X | X | returns current X coordinate | X<±0-990> | X
+| char | command            | syntax           | example | description                  | returns                                         | example |
+|------|--------------------|------------------|---------|------------------------------|-------------------------------------------------|---------|
+| N    | instruction number | N{number:0-9999} | N142    | command number 142           | N{0-executing/1-executed:0/1}{number:0-9999}    | N1 142  |
+| X    | get X coordinate   | X                | X       | returns current X coordinate | X{coordinate:±0-999}             | X -12   |
+| Y    | get Y coordinate   | Y                | Y       | returns current Y coordinate | Y{coordinate:±0-999}             | Y 5     |
+| Z    | get Z coordinate   | Z                | Z       | returns current Z coordinate | Z{coordinate:±0-999}             | Z -99   |
+| A    | get A coordinate   | A                | A       | returns current A coordinate | A{coordinate:±0-360}             | A 0     |
+| B    | get B coordinate   | B                | B       | returns current B coordinate | B{coordinate:±0-360}             | B -180  |
+| C    | get C coordinate   | C                | C       | returns current C coordinate | C{coordinate:±0-360}             | C 120   |
+
