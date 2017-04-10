@@ -1,0 +1,70 @@
+{
+  "name": "mrcl",
+  "description": "micropede robot control library",
+  "main": "dist/index.js",
+  "version": "0.0.0-semantic-release-controlled",
+  "scripts": {
+    "commit": "git-cz",
+    "test": "mocha ./test/*.test.js --compilers js:babel-register",
+    "watch:test": "npm t -- -w",
+    "eslint": "eslint './src/*.js' './test/*.js' --fix",
+    "build": "babel --out-dir dist src",
+    "cover": "nyc npm t",
+    "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov",
+    "check-coverage": "nyc check-coverage --functions 100",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glumb/mrcl.git"
+  },
+  "keywords": [
+    "robotics",
+    "robot controller",
+    "microPede"
+  ],
+  "files": [
+    "dist"
+  ],
+  "author": "Maximilian Beck <maximilian@glumb.de> (http://glumb.de/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/glumb/mrcl/issues"
+  },
+  "homepage": "https://github.com/glumb/mrcl#readme",
+  "devDependencies": {
+    "babel-cli": "6.18.0",
+    "babel-core": "6.18.2",
+    "babel-eslint": "7.1.0",
+    "babel-polyfill": "6.16.0",
+    "babel-preset-es2015": "6.18.0",
+    "babel-preset-stage-2": "6.18.0",
+    "babel-register": "6.18.0",
+    "chai": "3.5.0",
+    "codecov.io": "0.1.6",
+    "commitizen": "2.8.6",
+    "cz-conventional-changelog": "1.2.0",
+    "eslint": "3.10.0",
+    "eslint-config-airbnb": "13.0.0",
+    "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "6.6.0",
+    "istanbul": "0.4.5",
+    "mocha": "3.1.2",
+    "nyc": "8.4.0",
+    "semantic-release": "^4.3.5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "cli-table": "0.3.1",
+    "debug": "2.6.1",
+    "serialport": "4.0.7"
+  }
+}
