@@ -2,12 +2,7 @@
 <img src="https://cloud.githubusercontent.com/assets/3062564/24832709/e76f61aa-1cb5-11e7-8eda-11b82650cf1a.png" alt="mrcp" width="70" >  <img src="https://cloud.githubusercontent.com/assets/3062564/24832711/eb0a8416-1cb5-11e7-98fa-d0ddccd31eff.png" alt="mril" width="70" >
 
 # mrcp
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/glumb/mrcp/master/LICENSE.md)
-[![Travis](https://img.shields.io/travis/glumb/mrcp.svg)](https://travis-ci.org/glumb/mrcp)
-[![npm](https://img.shields.io/npm/v/mrcp.svg)](https://www.npmjs.com/package/mrcp)
-[![Codecov](https://img.shields.io/codecov/c/github/glumb/mrcp.svg)]()
-
-MicroPede Robot Control Protocol.
+MicroPede Robot Control Protocol. 
 
 ```gcode
 M01 V50 X15 Y42 Z1.6 A-3.1 B0 C3.1
@@ -16,7 +11,7 @@ M01 V50 X15 Y42 Z1.6 A-3.1 B0 C3.1
 Work in progress 😃
 
 **Design Goals**
-The protocol was designed to be a very simple to use method to control hobby robotic arms.
+The protocol was designed to be a very simple to use method to control hobby robotic arms. 
 Since all commands are in plain text, they can easily be manually written and send over serial via `screen` to the robot, to control it in a adhoc fashion. 🤖
 
 - simple to use 😎
@@ -103,3 +98,4 @@ Commands
 | A    | get A coordinate   | A                | A       | returns current A coordinate | A{coordinate:±0-360}             | A 0     |
 | B    | get B coordinate   | B                | B       | returns current B coordinate | B{coordinate:±0-360}             | B -180  |
 | C    | get C coordinate   | C                | C       | returns current C coordinate | C{coordinate:±0-360}             | C 120   |
+
