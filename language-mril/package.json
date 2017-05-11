@@ -1,0 +1,9 @@
+{
+  "name": "language-mrcp",
+  "version": "0.0.1",
+  "description": "Syntax highlighting for MicroPede Robot Control Protocol",
+  "engines": {
+    "atom": "*",
+    "node": "*"
+  }
+}

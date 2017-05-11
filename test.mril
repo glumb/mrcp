@@ -1,0 +1,19 @@
+
+## move
+N0 G01
+N1 G00 M12 V8 X15 Y10 Z5 A0 B1.5 C-1.5
+N2
+
+## grip
+N3 G11 R60 R590
+
+## IO
+N8 I9 0 I9 1
+N9 O3 1
+
+## lift
+N4 X12 Y15 Z15
+N5
+
+## Wait
+N6 D2000

@@ -1,0 +1,38 @@
+'fileTypes': [
+    'mr'
+    'mril'
+]
+'foldingStartMarker': '\\S'
+'foldingStopMarker': '\\E'
+'name': 'MRIL'
+'patterns': [
+    {
+        'match': '(^[nN][0-9]+|;.*)'
+        'name': 'comment.g-code'
+    }
+    {
+        'match': '#[^#]*'
+        'name': 'comment.gcode'
+    }
+    {
+        'match': '[gG]([ \\t]*[\\d])*[ \\t]*'
+        'name': 'keyword.control.gcode.gcode'
+    }
+    {
+        'match': '[mM]([ \\t]*[\\d])*[ \\t]*'
+        'name': 'keyword.control.mcode.gcode'
+    }
+    {
+        'match': '[xXyYzZaAbBcCvVdD]'
+        'name': 'string.parameter.gcode'
+    }
+    {
+        'match': '[rRiIoO][0-9]'
+        'name': 'string.parameter.gcode'
+    }
+    {
+        'match': '\\-?[\\d]+\\.?[\\d]*'
+        'name': 'constant.numeric.gcode'
+    }
+]
+'scopeName': 'source.mril'
