@@ -87,6 +87,12 @@ Commands
 | I    | wait for input | I{pin number:0-9}{state:0/1} | I9 0    | wait for pin 9 to be LOW/0 |         |         |
 | O    | set output     | O{pin number:0-9}{state:0/1} | O3 1    | set pin 3 to HIGH          |         |         |
 
+**misc**
+
+| char | command        | syntax                       | example | description                | returns | example |
+|------|----------------|------------------------------|---------|----------------------------|---------|---------|
+| D    | delay          | D{ms:0-99999}                | D 2000  | wait 2s                    |         |         |
+
 **Monitoring**
 
 | char | command            | syntax           | example | description                  | returns                                         | example |
