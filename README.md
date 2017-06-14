@@ -46,9 +46,11 @@ S M  X3.1 Y42 Z1.6  \n
 
 |character| command |description|
 |   ---   |   ---   |    ---    |
-|        Q|queue in |add the mri (MP robot instruction) to the execution queue.|
-|        M|move to  |immediately execute mri.|
-|        W|write    |write mro to EEPROM.|
+| Q {mri} |queue in     |add the mri (MP robot instruction) to the execution queue.|
+| Q       |clear queue  |clear the inctruction queue.|
+| E {mri} |execute      |immediately execute mri.|
+| W {mri} |write        |write mri to EEPROM.|
+| W       |clear EEPROM |clear EEPROM.|
 
 # mril
 MicroPede Robot Instruction Language.
@@ -70,7 +72,7 @@ Commands
 | char | command           | syntax                         | example         | description                                            |
 |------|-------------------|--------------------------------|-----------------|--------------------------------------------------------|
 | M    | movement method   | M{method:00/01/02}             | M00             | 00 - P2P; 01 - Linear; 02 - Circular                   |
-| V    | velocity          | V{velocity:0-999}              | V100            | Sets linear or angular velocity based on M command!    |
+| V    | velocity          | V{velocity:0-999}              | V100            | Sets linear or angular velocity based on M command! [deg/s, mm/s]    |
 | X    | x coordinate      | X{coordinate:±0-999}           | X 0             |                                                        |
 | Y    | y coordinate      | Y{coordinate:±0-999}           | Y -12.3         |                                                        |
 | Z    | z coordinate      | Z{coordinate:±0-999}           | Z 0.5           |                                                        |
