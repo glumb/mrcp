@@ -22,16 +22,20 @@ Since all commands are in plain text, they can easily be manually written and se
 **Schema**
 ```
 <start><mode><instruction><end>
+  S      E     X3.1        \n
 ```
+
+MRCP is used to frame instructions sent to the mrc and define the execution mode. The first symbol `S` denotes the start of an MRCP command. The second symbol `E/W/Q` is used to set the execution mode. A instruction can be executed immidiately `E - execute`, added to a in memory queue `Q` and therefore exequted sequentially (only 300 Bytes fit in memory, use `B` to receive the free queue). `W` is used to store the instruction in the EEProm storage. If a instructions are stored in the EEProm, the MRC will automatically loop through them until the execution mode is changed to `Q` or the EEProm is cleared `single W`.
+
 **Examples**
 ```
-S M X3.1 Y42 Z1.6 \n
+S E X3.1 Y42 Z1.6 \n
 ---
 S - start character
-M - move command
+E - move command
 X,Y,Z - target coordinates
 
-S M  X3.1 Y42 Z1.6  \n
+S E  X3.1 Y42 Z1.6  \n
 + +  +-----------+  +----+
 | |  |                   |
 | |  +->payload          |
@@ -42,7 +46,9 @@ S M  X3.1 Y42 Z1.6  \n
 
 ```
 
-## Commands
+
+
+## Execution Mode
 
 |character| command |description|
 |   ---   |   ---   |    ---    |
@@ -62,7 +68,7 @@ A command is the combination of a symbol, a single digit option (optional) and m
 
 `<command>[<option>][<value>]` example: `R5 -30.1`
 
-Commands
+The MRC is statefull, meaning that previous commands are still applied if the current instruction does not override them. E.g. setting a velocity `V10`. All sucessive instructions still implicitly use `V10` even if they do not set the velocity again.
 
 ## Commands
 
@@ -94,6 +100,7 @@ Commands
 | char | command        | syntax                       | example | description                | returns | example |
 |------|----------------|------------------------------|---------|----------------------------|---------|---------|
 | D    | delay          | D{ms:0-99999}                | D 2000  | wait 2s                    |         |         |
+| #    | comment        | #{comment:0-9,a-z}           | # home pos  |                        |         |         |
 
 **Monitoring**
 
@@ -106,6 +113,24 @@ Commands
 | A    | get A coordinate   | A                | A       | returns current A coordinate | A{coordinate:±0-360}             | A 0     |
 | B    | get B coordinate   | B                | B       | returns current B coordinate | B{coordinate:±0-360}             | B -180  |
 | C    | get C coordinate   | C                | C       | returns current C coordinate | C{coordinate:±0-360}             | C 120   |
+
+
+## Example MRCP + Instructions
+
+```gcode
+# Use Queue to wait for logic and execute instruction sequentially
+S Q M00 R0 0 R1 0 R2 0 R3 0 R4 0 R5 0 \n # Move P2P to all axis 0 position 
+S Q I0 1 \n                              # Wait for input 0 to be HIGH
+S Q M01 X0 \n                            # Move linar to X 0
+S Q O1 0 O2 0 X22 Y-10 \n                # Sets outputs 1,2 to LOW and moves to x:22,y:-10
+
+# Use Execute to query for status
+S E XZA \n                               # Get the current values of X,Z and A (returns :X3.1Z1.6A180)
+S E X3.1 Y42 Z1.6 A180 B0 C180 \n        # Execute the instruction move to 3.1,42,1.6,180,0,180 immediately
+
+# Use Write to store instructions on EEProm
+S W X3.1 Y42 Z1.6 A180 B0 C180 \n        # Writes the instruction move to 3.1,42,1.6,180,0,180 to EEProm
+```
 
 ## Atom Syntax Highlighting - Grammar
 
