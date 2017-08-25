@@ -22,20 +22,20 @@ Since all commands are in plain text, they can easily be manually written and se
 **Schema**
 ```
 <start><mode><instruction><end>
-  S      E     X3.1        \n
+  S      Q     X3.1        \n
 ```
 
 MRCP is used to frame instructions sent to the mrc and define the execution mode. The first symbol `S` denotes the start of an MRCP command. The second symbol `E/W/Q` is used to set the execution mode. A instruction can be executed immidiately `E - execute`, added to a in memory queue `Q` and therefore exequted sequentially (only 300 Bytes fit in memory, use `B` to receive the free queue). `W` is used to store the instruction in the EEProm storage. If a instructions are stored in the EEProm, the MRC will automatically loop through them until the execution mode is changed to `Q` or the EEProm is cleared `single W`.
 
 **Examples**
 ```
-S E X3.1 Y42 Z1.6 \n
+S Q X3.1 Y42 Z1.6 \n
 ---
 S - start character
-E - move command
+Q - move command
 X,Y,Z - target coordinates
 
-S E  X3.1 Y42 Z1.6  \n
+S Q  X3.1 Y42 Z1.6  \n
 + +  +-----------+  +----+
 | |  |                   |
 | |  +->payload          |
